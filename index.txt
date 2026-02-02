@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abdo surprise 💘</title>
+
+  <style>
+    :root{
+      --pink:#ff2d6d;
+      --pink2:#ff6aa2;
+      --card: rgba(255,255,255,.85);
+      --stroke: rgba(0,0,0,.08);
+      --txt: rgba(0,0,0,.88);
+      --muted: rgba(0,0,0,.60);
+      --shadow: 0 18px 60px rgba(0,0,0,.12);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--txt);
+      overflow:hidden;
+      background: #ffffff;
+    }
+
+    /* soft background decoration */
+    .bgDecor{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,45,109,.12), transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(255,106,162,.10), transparent 50%),
+        radial-gradient(circle at 80% 15%, rgba(0,0,0,.04), transparent 40%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .wrap{
+      position:relative;
+      z-index:2;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+
+    .card{
+      width:min(560px, 94vw);
+      background:var(--card);
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow);
+      border-radius:24px;
+      padding:22px;
+      text-align:center;
+      backdrop-filter: blur(10px);
+    }
+
+    .tag{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,45,109,.08);
+      font-size:12px;
+      margin-bottom:12px;
+      font-weight:700;
+      color: rgba(0,0,0,.75);
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:.2px;
+    }
+
+    p{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:1.4;
+      font-size:15px;
+    }
+
+    .question{
+      font-size:18px;
+      margin:14px 0 14px;
+      font-weight:800;
+    }
+
+    .btns{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:10px;
+      position:relative;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      padding:12px 18px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:15px;
+      transition: transform .12s ease, opacity .12s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,.10);
+      user-select:none;
+    }
+    button:active{ transform: scale(.97); }
+
+    .primary{
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      color:white;
+    }
+
+    .secondary{
+      background: rgba(0,0,0,.06);
+      color: rgba(0,0,0,.85);
+      border:1px solid rgba(0,0,0,.08);
+    }
+
+    .tiny{
+      margin-top:12px;
+      font-size:12px;
+      opacity:.8;
+      color: rgba(0,0,0,.55);
+    }
+
+    /* moving NO button */
+    #noBtn{
+      position:relative;
+    }
+
+    .success{
+      display:none;
+      margin-top:16px;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,45,109,.06);
+      animation: pop .35s ease;
+    }
+
+    @keyframes pop{
+      from{ transform: scale(.95); opacity:0; }
+      to{ transform: scale(1); opacity:1; }
+    }
+
+    .success h2{
+      margin:0 0 6px;
+      font-size:22px;
+      color: rgba(0,0,0,.88);
+    }
+
+    .success p{
+      margin:0;
+      font-size:14px;
+      color: rgba(0,0,0,.70);
+      line-height:1.5;
+    }
+
+    .celebrate{
+      display:none;
+      margin-top:10px;
+      font-size:22px;
+      letter-spacing:2px;
+      animation: pop .45s ease;
+    }
+
+    /* Photo appears only after YES */
+    .photoWrap{
+      display:none;
+      margin-top:14px;
+      animation: pop .45s ease;
+    }
+
+    .photoWrap img{
+      width:min(340px, 80vw);
+      border-radius:18px;
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    }
+
+    /* confetti hearts burst */
+    .burst{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:3;
+    }
+
+    .piece{
+      position:absolute;
+      font-size:22px;
+      animation: burstFly 1.2s ease-out forwards;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.12));
+    }
+
+    @keyframes burstFly{
+      0%{ transform: translate(0,0) scale(.7); opacity:0; }
+      10%{ opacity:1; }
+      100%{ transform: translate(var(--dx), var(--dy)) scale(1.15) rotate(360deg); opacity:0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bgDecor"></div>
+  <div class="burst" id="burst"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="tag">From Abdo 💘</div>
+
+      <h1>Hey Kbida dyali 😍</h1>
+      <p>I made a little surprise just for you ✨</p>
+
+      <!-- STEP 1 -->
+      <div id="step1">
+        <div class="question">Wash katbghini bzzf wla shwiya? 😏</div>
+        <div class="btns">
+          <button class="primary" onclick="chooseLove('BZZF 😍💘')">Bzzf 💖</button>
+          <button class="secondary" onclick="chooseLove('SHWIYA 😌💗')">Shwiya 🤭</button>
+        </div>
+        <div class="tiny">Choose honestly 😄</div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="step2" style="display:none;">
+        <div class="question">Will you be my Valentine? 💝</div>
+
+        <div class="btns">
+          <button class="primary" id="yesBtn">Yes 💘</button>
+          <button class="secondary" id="noBtn">No 🙈</button>
+        </div>
+
+        <div class="tiny" id="loveAnswerText"></div>
+
+        <!-- SUCCESS -->
+        <div class="success" id="successBox">
+          <h2>YAAAAY 💖💘</h2>
+          <p>
+            You just made my whole day, <b>Kbida dyali</b> 😍<br/>
+            I promise I’ll make this Valentine’s special ✨🍰💝
+          </p>
+
+          <div class="celebrate" id="celebrate">
+            🎉🎊🥳💘✨🎉🎊
+          </div>
+
+          <div class="photoWrap" id="photoWrap">
+            <img src="photo.jpeg" alt="Our photo" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let loveChoice = "";
+
+    function chooseLove(choice){
+      loveChoice = choice;
+      document.getElementById("step1").style.display = "none";
+      document.getElementById("step2").style.display = "block";
+      document.getElementById("loveAnswerText").innerHTML =
+        "You chose: <b>" + loveChoice + "</b> 😍";
+    }
+
+    // Moving NO button
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseenter", moveNo);
+    noBtn.addEventListener("click", moveNo);
+    noBtn.addEventListener("touchstart", moveNo);
+
+    function moveNo(){
+      const maxX = 220;
+      const maxY = 120;
+      const x = (Math.random() * maxX) - (maxX/2);
+      const y = (Math.random() * maxY) - (maxY/2);
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // Cute pop sound (no file needed)
+    function playPop(){
+      try{
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioContext();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+
+        o.type = "triangle";
+        o.frequency.value = 520;
+        g.gain.value = 0.08;
+
+        o.connect(g);
+        g.connect(ctx.destination);
+
+        o.start();
+        o.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.12);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+
+        setTimeout(() => {
+          o.stop();
+          ctx.close();
+        }, 220);
+      }catch(e){
+        // ignore if blocked
+      }
+    }
+
+    // Hearts/confetti burst
+    function makeBurst(){
+      const burst = document.getElementById("burst");
+      const emojis = ["💘","💖","💗","💕","✨","🎉","🥳","🎊"];
+      const count = 22;
+
+      for(let i=0;i<count;i++){
+        const el = document.createElement("div");
+        el.className = "piece";
+        el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+
+        const x = 50 + (Math.random()*10 - 5); // center-ish
+        const y = 55 + (Math.random()*10 - 5);
+
+        el.style.left = x + "vw";
+        el.style.top = y + "vh";
+
+        const dx = (Math.random()*600 - 300) + "px";
+        const dy = (Math.random()*-520 - 120) + "px";
+        el.style.setProperty("--dx", dx);
+        el.style.setProperty("--dy", dy);
+
+        el.style.fontSize = (18 + Math.random()*18) + "px";
+
+        burst.appendChild(el);
+
+        setTimeout(() => el.remove(), 1400);
+      }
+    }
+
+    // YES click
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      playPop();
+      makeBurst();
+
+      document.getElementById("successBox").style.display = "block";
+      document.getElementById("celebrate").style.display = "block";
+      document.getElementById("photoWrap").style.display = "block";
+      noBtn.style.display = "none";
+    });
+  </script>
+</body>
+</html>
