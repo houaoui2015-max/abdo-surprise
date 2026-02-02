@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abdo surprise 💘</title>
+
+  <style>
+    :root{
+      --pink:#ff2d6d;
+      --card: rgba(255,255,255,.14);
+      --stroke: rgba(255,255,255,.18);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --shadow: 0 22px 70px rgba(0,0,0,.35);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      overflow:hidden;
+      background:#000;
+      color:var(--txt);
+    }
+
+    .bg{
+      position:fixed; inset:0;
+      background-image: url("photo.jpeg");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    .overlay{
+      position:fixed; inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,45,109,.25), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(120,90,255,.22), transparent 50%),
+        linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.55));
+      backdrop-filter: blur(3px);
+    }
+
+    #hearts{
+      position:fixed; inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .heart{
+      position:absolute;
+      bottom:-40px;
+      font-size: 18px;
+      opacity:.9;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.35));
+      animation: floatUp linear forwards;
+      user-select:none;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+      10%{ opacity:1; }
+      to{ transform: translateY(-120vh) translateX(var(--drift)) rotate(20deg); opacity:0; }
+    }
+
+    .wrap{
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .card{
+      width:min(620px, 94vw);
+      border-radius:22px;
+      background: var(--card);
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      padding:26px 22px;
+      text-align:center;
+      animation: cardIn .55s ease;
+    }
+    @keyframes cardIn{
+      from{ opacity:0; transform: translateY(14px) scale(.98); }
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    .tag{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    h1{ margin:8px 0 8px; font-size:28px; }
+    p{ margin:0 0 18px; color:var(--muted); font-size:15px; line-height:1.35; }
+
+    .btns{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    button{
+      border:0;
+      padding:12px 18px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:16px;
+      cursor:pointer;
+      transition: transform .08s ease, filter .2s ease;
+    }
+    button:active{ transform: scale(.98); }
+
+    .yes{
+      background: var(--pink);
+      color:white;
+      box-shadow: 0 12px 30px rgba(255,45,109,.35);
+    }
+    .yes:hover{ filter: brightness(1.06); }
+
+    .no{
+      background: rgba(255,255,255,.88);
+      color:#1a1a1a;
+    }
+
+    .footer{
+      margin-top:14px;
+      font-size:12px;
+      color: rgba(255,255,255,.65);
+    }
+
+    .hidden{ display:none; }
+
+    .topbar{
+      position:fixed;
+      top:14px; left:14px; right:14px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      z-index:5;
+      pointer-events:none;
+    }
+    .chip{
+      pointer-events:auto;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.9);
+      font-weight:700;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      backdrop-filter: blur(6px);
+    }
+
+    canvas#confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:6;
+    }
+
+    .note{
+      margin-top:12px;
+      font-size:12px;
+      color: rgba(255,255,255,.7);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg"></div>
+  <div class="overlay"></div>
+
+  <div class="topbar">
+    <div class="chip" onclick="toggleMusic()">🎶 Music: <span id="musicState">OFF</span></div>
+    <div class="chip" onclick="toggleHearts()">💖 Hearts: <span id="heartState">ON</span></div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+  <div id="hearts"></div>
+
+  <div class="wrap">
+
+    <div class="card" id="page-question">
+      <div class="tag">✨ Abdo surprise</div>
+      <h1>Kbida dyali 💖</h1>
+      <p>Will you be my Valentine?</p>
+
+      <div class="btns">
+        <button class="yes" onclick="goYes()">Yes 💘</button>
+        <button class="no" onclick="goNo()">No 🙂</button>
+      </div>
+
+      <div class="note">No pressure — just love and vibes 😄</div>
+      <div class="footer">— Abdo</div>
+    </div>
+
+    <div class="card hidden" id="page-yes">
+      <div class="tag">💘 Valentine accepted</div>
+      <h1>YAAAAY!! 💖💘</h1>
+      <p>Kbida dyali you just made my day 😄</p>
+      <p style="margin-top:10px;">Now Abdo owes you a cute date 🍰✨</p>
+
+      <div class="btns" style="margin-top:18px;">
+        <button class="no" onclick="backHome()">⬅ Back</button>
+        <button class="yes" onclick="copyMsg()">📩 Copy message</button>
+      </div>
+
+      <div class="note" id="copiedNote" style="display:none;">Copied 😄 now send it to Abdo!</div>
+    </div>
+
+    <div class="card hidden" id="page-no">
+      <div class="tag">🙂 Respect mode</div>
+      <h1>No worries 🙂</h1>
+      <p>Thank you for being honest 💫</p>
+      <p style="margin-top:10px;">You’ll always be special to me.</p>
+
+      <div class="btns" style="margin-top:18px;">
+        <button class="no" onclick="backHome()">⬅ Back</button>
+      </div>
+
+      <div class="footer">— Abdo</div>
+    </div>
+
+  </div>
+
+  <script>
+    function showPage(which){
+      document.getElementById("page-question").classList.add("hidden");
+      document.getElementById("page-yes").classList.add("hidden");
+      document.getElementById("page-no").classList.add("hidden");
+
+      if(which === "yes") document.getElementById("page-yes").classList.remove("hidden");
+      else if(which === "no") document.getElementById("page-no").classList.remove("hidden");
+      else document.getElementById("page-question").classList.remove("hidden");
+    }
+
+    function goYes(){
+      showPage("yes");
+      burstConfetti();
+      popHearts(14);
+    }
+    function goNo(){
+      showPage("no");
+      popHearts(6);
+    }
+    function backHome(){ showPage("question"); }
+
+    async function copyMsg(){
+      const text = "Kbida dyali 💖 I said YES 😄💘";
+      try{
+        await navigator.clipboard.writeText(text);
+        document.getElementById("copiedNote").style.display = "block";
+        setTimeout(()=> document.getElementById("copiedNote").style.display="none", 1800);
+      }catch(e){
+        alert("Copy not supported 😅 Just type: " + text);
+      }
+    }
+
+    const heartsLayer = document.getElementById("hearts");
+    let heartsOn = true;
+    document.getElementById("heartState").textContent = "ON";
+
+    function spawnHeart(){
+      if(!heartsOn) return;
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = Math.random() > 0.5 ? "💖" : "💘";
+      const left = Math.random() * 100;
+      const size = 14 + Math.random() * 18;
+      const duration = 4 + Math.random() * 4;
+      const drift = (-40 + Math.random()*80).toFixed(0) + "px";
+
+      h.style.left = left + "vw";
+      h.style.fontSize = size + "px";
+      h.style.animationDuration = duration + "s";
+      h.style.setProperty("--drift", drift);
+
+      heartsLayer.appendChild(h);
+      setTimeout(()=> h.remove(), duration*1000);
+    }
+    setInterval(spawnHeart, 280);
+
+    function toggleHearts(){
+      heartsOn = !heartsOn;
+      document.getElementById("heartState").textContent = heartsOn ? "ON" : "OFF";
+    }
+    function popHearts(n=10){
+      for(let i=0;i<n;i++) setTimeout(spawnHeart, i*40);
+    }
+
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let W,H;
+    function resize(){
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    let confetti = [];
+    function burstConfetti(){
+      confetti = [];
+      const count = 160;
+      for(let i=0;i<count;i++){
+        confetti.push({
+          x: W/2, y: H/2,
+          vx: (Math.random()-0.5)*10,
+          vy: (Math.random()-0.9)*12,
+          g: 0.22 + Math.random()*0.08,
+          s: 3 + Math.random()*4,
+          a: 1
+        });
+      }
+    }
+
+    function drawConfetti(){
+      ctx.clearRect(0,0,W,H);
+      for(const p of confetti){
+        p.vy += p.g;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.a *= 0.985;
+        ctx.globalAlpha = p.a;
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+      }
+      ctx.globalAlpha = 1;
+      confetti = confetti.filter(p => p.a > 0.05 && p.y < H+40);
+      requestAnimationFrame(drawConfetti);
+    }
+    drawConfetti();
+
+    let audioCtx = null;
+    let musicOn = false;
+    let musicTimer = null;
+
+    function beep(freq, t){
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = "sine";
+      o.frequency.value = freq;
+      g.gain.value = 0.05;
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(t);
+      o.stop(t + 0.12);
+    }
+
+    function playLoop(){
+      if(!musicOn) return;
+      const now = audioCtx.currentTime;
+      beep(523.25, now);
+      beep(659.25, now+0.18);
+      beep(783.99, now+0.36);
+      beep(659.25, now+0.54);
+      beep(587.33, now+0.72);
+      beep(659.25, now+0.90);
+      musicTimer = setTimeout(playLoop, 1400);
+    }
+
+    function toggleMusic(){
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      musicOn = !musicOn;
+      document.getElementById("musicState").textContent = musicOn ? "ON" : "OFF";
+      if(musicOn) playLoop();
+      else clearTimeout(musicTimer);
+    }
+  </script>
+</body>
+</html>
